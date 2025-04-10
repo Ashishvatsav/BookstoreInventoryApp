@@ -24,6 +24,9 @@
         <activity android:name=".HomeActivity"></activity>
         <activity android:name=".AddEditActivity"></activity>
         <activity android:name=".DetailsActivity"></activity>
+        <activity android:name=".ProfileActivity" />
+        <activity android:name=".VendorsActivity" />
+
 
     </application>
 

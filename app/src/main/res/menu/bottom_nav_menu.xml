@@ -11,4 +11,12 @@
         android:id="@+id/detailsActivity"
         android:icon="@drawable/ic_info"
         android:title="Details" />
+    <item
+        android:id="@+id/vendorsActivity"
+        android:icon="@drawable/ic_store"
+        android:title="Vendors" />
+    <item
+        android:id="@+id/profileActivity"
+        android:icon="@drawable/ic_person"
+        android:title="Profile" />
 </menu>
