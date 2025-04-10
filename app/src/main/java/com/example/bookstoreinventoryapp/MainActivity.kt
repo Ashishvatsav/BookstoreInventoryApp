@@ -1,10 +1,8 @@
 package com.example.bookstoreinventoryapp
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
@@ -14,17 +12,25 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Check login status first
+        val prefs = getSharedPreferences("user_auth", MODE_PRIVATE)
+        if (prefs.getInt("user_id", -1) == -1) {
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
+            return
+        }
+
         setContentView(R.layout.activity_main)
 
-        // Make app draw behind status and navigation bars
+        // Enable edge-to-edge
         WindowCompat.setDecorFitsSystemWindows(window, false)
-
-        // Handle edge-to-edge support with backward compatibility
         val controller = WindowInsetsControllerCompat(window, window.decorView)
         controller.isAppearanceLightStatusBars = true
         controller.isAppearanceLightNavigationBars = true
         controller.show(WindowInsetsCompat.Type.systemBars())
 
+        // Bottom Navigation setup
         val bottomNav = findViewById<BottomNavigationView>(R.id.bottom_nav)
 
         bottomNav.setOnNavigationItemSelectedListener { item ->
