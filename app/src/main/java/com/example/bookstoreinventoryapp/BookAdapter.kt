@@ -1,61 +1,40 @@
 package com.example.bookstoreinventoryapp
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Filter
-import android.widget.Filterable
 import android.widget.TextView
+import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 
-class BookAdapter(private var bookList: List<Book>) :
-    RecyclerView.Adapter<BookAdapter.BookViewHolder>(), Filterable {
+class BookAdapter(private val context: Context, private val books: List<Book>) :
+    RecyclerView.Adapter<BookAdapter.BookViewHolder>() {
 
-    private var filteredList = bookList.toMutableList()
-
-    inner class BookViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleText: TextView = itemView.findViewById(R.id.bookTitle)
-        val authorText: TextView = itemView.findViewById(R.id.bookAuthor)
-        val priceText: TextView = itemView.findViewById(R.id.bookPrice)
+    // ViewHolder class to hold each item view
+    class BookViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val bookTitle: TextView = view.findViewById(R.id.itemBookTitle)
+        val bookAuthor: TextView = view.findViewById(R.id.itemBookAuthor)
+        val bookImage: ImageView = view.findViewById(R.id.itemBookImage)
     }
 
+    // Create a new view holder when needed
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BookViewHolder {
-        val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.item_book, parent, false)
+        val view = LayoutInflater.from(context).inflate(R.layout.item_book, parent, false)
         return BookViewHolder(view)
     }
 
+    // Bind data to the view holder
     override fun onBindViewHolder(holder: BookViewHolder, position: Int) {
-        val book = filteredList[position]
-        holder.titleText.text = book.title
-        holder.authorText.text = book.author
-        holder.priceText.text = book.price
+        val book = books[position]
+        holder.bookTitle.text = book.title
+        holder.bookAuthor.text = book.author
+        // Assuming you have some method to set the image resource (e.g., Glide or Picasso)
+        holder.bookImage.setImageResource(book.imageResId)
     }
 
-    override fun getItemCount(): Int = filteredList.size
-
-    override fun getFilter(): Filter {
-        return object : Filter() {
-            override fun performFiltering(constraint: CharSequence?): FilterResults {
-                val searchString = constraint.toString().lowercase()
-                filteredList = if (searchString.isEmpty()) {
-                    bookList.toMutableList()
-                } else {
-                    bookList.filter {
-                        it.title.lowercase().contains(searchString) ||
-                                it.author.lowercase().contains(searchString)
-                    }.toMutableList()
-                }
-
-                val filterResults = FilterResults()
-                filterResults.values = filteredList
-                return filterResults
-            }
-
-            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
-                filteredList = results?.values as MutableList<Book>
-                notifyDataSetChanged()
-            }
-        }
+    // Return the number of items in the list
+    override fun getItemCount(): Int {
+        return books.size
     }
 }
