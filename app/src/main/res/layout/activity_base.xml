@@ -8,9 +8,9 @@
     <!-- Page-specific content will be added here -->
     <FrameLayout
         android:id="@+id/container"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="0dp" />
+        android:layout_height="0dp"
+        android:layout_weight="1" />
 
     <!-- Bottom Navigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView

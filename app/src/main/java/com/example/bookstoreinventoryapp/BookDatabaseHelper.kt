@@ -2,6 +2,7 @@ package com.example.bookstoreinventoryapp
 
 import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
@@ -45,13 +46,11 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        if (oldVersion < newVersion) {
-            db.execSQL("DROP TABLE IF EXISTS $TABLE_BOOKS")
-            onCreate(db)
-        }
+        db.execSQL("DROP TABLE IF EXISTS $TABLE_BOOKS")
+        onCreate(db)
     }
 
-    fun insertBook(book: Book) {
+    fun insertBook(book: Book): Long {
         val db = writableDatabase
         val values = ContentValues().apply {
             put(TITLE, book.title)
@@ -64,102 +63,105 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             put(VENDOR, book.vendor)
             put(IMAGE_RES_ID, book.imageResId)
         }
-        db.insert(TABLE_BOOKS, null, values)
+        val id = db.insert(TABLE_BOOKS, null, values)
         db.close()
+        return id
     }
 
     fun insertSampleBooksIfNeeded() {
+        if (getBooksCount() == 0) {
+            BookData.sampleBooks.forEach { insertBook(it) }
+        }
+    }
+
+    private fun getBooksCount(): Int {
         val db = readableDatabase
         val cursor = db.rawQuery("SELECT COUNT(*) FROM $TABLE_BOOKS", null)
-        var count = 0
-        if (cursor.moveToFirst()) {
-            count = cursor.getInt(0)
-        }
-        cursor.close()
-        db.close()
-
-        if (count == 0) {
-            for (book in BookData.sampleBooks) {
-                insertBook(book)
-            }
+        return cursor.use {
+            if (it.moveToFirst()) it.getInt(0) else 0
         }
     }
 
     fun getAllBooks(): List<Book> {
-        val bookList = mutableListOf<Book>()
         val db = readableDatabase
         val cursor = db.query(TABLE_BOOKS, null, null, null, null, null, null)
-        while (cursor.moveToNext()) {
-            val book = Book(
-                id = cursor.getLong(cursor.getColumnIndexOrThrow(ID)),
-                title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-                author = cursor.getString(cursor.getColumnIndexOrThrow(AUTHOR)),
-                price = cursor.getString(cursor.getColumnIndexOrThrow(PRICE)),
-                category = cursor.getString(cursor.getColumnIndexOrThrow(CATEGORY)),
-                quantity = cursor.getInt(cursor.getColumnIndexOrThrow(QUANTITY)),
-                publisher = cursor.getString(cursor.getColumnIndexOrThrow(PUBLISHER)),
-                edition = cursor.getString(cursor.getColumnIndexOrThrow(EDITION)),
-                vendor = cursor.getString(cursor.getColumnIndexOrThrow(VENDOR)),
-                imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(IMAGE_RES_ID))
-            )
-            bookList.add(book)
+        return cursor.use {
+            val books = mutableListOf<Book>()
+            while (it.moveToNext()) {
+                books.add(extractBookFromCursor(it))
+            }
+            books
         }
-        cursor.close()
-        return bookList
     }
 
+    fun searchBooks(query: String): List<Book> {
+        val db = readableDatabase
+        val cursor = db.rawQuery(
+            "SELECT * FROM $TABLE_BOOKS WHERE " +
+                    "LOWER($TITLE) LIKE ? OR LOWER($AUTHOR) LIKE ?",
+            arrayOf("%${query.lowercase()}%", "%${query.lowercase()}%")
+        )
+        return cursor.use {
+            val books = mutableListOf<Book>()
+            while (it.moveToNext()) {
+                books.add(extractBookFromCursor(it))
+            }
+            books
+        }
+    }
+
+    private fun extractBookFromCursor(cursor: Cursor): Book {
+        return Book(
+            id = cursor.getLong(cursor.getColumnIndexOrThrow(ID)),
+            title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
+            author = cursor.getString(cursor.getColumnIndexOrThrow(AUTHOR)),
+            price = cursor.getString(cursor.getColumnIndexOrThrow(PRICE)),
+            category = cursor.getString(cursor.getColumnIndexOrThrow(CATEGORY)),
+            quantity = cursor.getInt(cursor.getColumnIndexOrThrow(QUANTITY)),
+            publisher = cursor.getString(cursor.getColumnIndexOrThrow(PUBLISHER)),
+            edition = cursor.getString(cursor.getColumnIndexOrThrow(EDITION)),
+            vendor = cursor.getString(cursor.getColumnIndexOrThrow(VENDOR)),
+            imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(IMAGE_RES_ID))
+        )
+    }
+
+
+    // Other methods (getBookByTitle, etc.) remain the same
+
+    // Add these methods to your BookDatabaseHelper class
     fun getAllBookTitles(): List<String> {
-        val db = this.readableDatabase
-        val cursor = db.query(TABLE_BOOKS, arrayOf(TITLE), null, null, null, null, null)
-        val titles = mutableListOf<String>()
-        val titleIndex = cursor.getColumnIndex(TITLE)
-
-        if (titleIndex == -1) {
-            Log.e("Database Error", "Column 'title' not found in the result set.")
-            return titles
-        }
-
-        while (cursor.moveToNext()) {
-            val title = cursor.getString(titleIndex)
-            titles.add(title)
-        }
-        cursor.close()
-        return titles
-    }
-
-    fun getBookByTitle(title: String): Book? {
         val db = readableDatabase
         val cursor = db.query(
             TABLE_BOOKS,
-            null,
-            "LOWER($TITLE) = ?",
-            arrayOf(title.trim().lowercase()),
-            null,
-            null,
-            null
+            arrayOf(TITLE),
+            null, null, null, null, null
         )
-        return if (cursor.moveToFirst()) {
-            val book = Book(
-                id = cursor.getLong(cursor.getColumnIndexOrThrow(ID)),
-                title = cursor.getString(cursor.getColumnIndexOrThrow(TITLE)),
-                author = cursor.getString(cursor.getColumnIndexOrThrow(AUTHOR)),
-                price = cursor.getString(cursor.getColumnIndexOrThrow(PRICE)),
-                category = cursor.getString(cursor.getColumnIndexOrThrow(CATEGORY)),
-                quantity = cursor.getInt(cursor.getColumnIndexOrThrow(QUANTITY)),
-                publisher = cursor.getString(cursor.getColumnIndexOrThrow(PUBLISHER)),
-                edition = cursor.getString(cursor.getColumnIndexOrThrow(EDITION)),
-                vendor = cursor.getString(cursor.getColumnIndexOrThrow(VENDOR)),
-                imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(IMAGE_RES_ID))
-            )
-            cursor.close()
-            book
-        } else {
-            cursor.close()
-            null
+
+        return cursor.use {
+            val titles = mutableListOf<String>()
+            while (it.moveToNext()) {
+                titles.add(it.getString(it.getColumnIndexOrThrow(TITLE)))
+            }
+            titles
         }
     }
 
     fun getBookDetailsByTitle(title: String): Book? {
-        return getBookByTitle(title)
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_BOOKS,
+            null,
+            "$TITLE = ?",
+            arrayOf(title),
+            null, null, null
+        )
+
+        return cursor.use {
+            if (it.moveToFirst()) {
+                extractBookFromCursor(it)
+            } else {
+                null
+            }
+        }
     }
 }
