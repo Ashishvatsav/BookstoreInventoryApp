@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper
 import android.util.Log
 
 class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null, DATABASE_VERSION) {
-    
+
     companion object {
         private const val DATABASE_NAME = "Bookstore.db"
         private const val DATABASE_VERSION = 1
@@ -129,7 +129,15 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
 
     fun getBookByTitle(title: String): Book? {
         val db = readableDatabase
-        val cursor = db.query(TABLE_BOOKS, null, "$TITLE = ?", arrayOf(title), null, null, null)
+        val cursor = db.query(
+            TABLE_BOOKS,
+            null,
+            "LOWER($TITLE) = ?",
+            arrayOf(title.trim().lowercase()),
+            null,
+            null,
+            null
+        )
         return if (cursor.moveToFirst()) {
             val book = Book(
                 id = cursor.getLong(cursor.getColumnIndexOrThrow(ID)),
