@@ -1,21 +1,98 @@
-<?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".AddEditActivity">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/addEditTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Add/Edit Activity - Placeholder"
-        android:textSize="20sp"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+    <LinearLayout
+        android:orientation="vertical"
+        android:padding="16dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <Button
+            android:id="@+id/btnAddItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Add Book" />
+
+        <Button
+            android:id="@+id/btnEditItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Edit Book" />
+
+        <Spinner
+            android:id="@+id/spinnerBooks"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+        <EditText
+            android:id="@+id/editTextTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Title" />
+
+        <EditText
+            android:id="@+id/editTextAuthor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Author" />
+
+        <EditText
+            android:id="@+id/editTextPrice"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Price" />
+
+        <EditText
+            android:id="@+id/editTextCategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Category" />
+
+        <EditText
+            android:id="@+id/editTextQuantity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantity"
+            android:inputType="number" />
+
+        <EditText
+            android:id="@+id/editTextPublisher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Publisher" />
+
+        <EditText
+            android:id="@+id/editTextEdition"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Edition" />
+
+        <EditText
+            android:id="@+id/editTextVendor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Vendor" />
+
+        <ImageView
+            android:id="@+id/imageViewCover"
+            android:layout_width="150dp"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/ic_book_placeholder"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btnSelectImage"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Select Cover Image" />
+
+        <Button
+            android:id="@+id/btnSaveBook"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save Book" />
+    </LinearLayout>
+</ScrollView>

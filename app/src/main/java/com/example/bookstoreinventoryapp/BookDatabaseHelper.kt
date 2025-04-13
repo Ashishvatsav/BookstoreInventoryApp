@@ -164,4 +164,63 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             }
         }
     }
+
+    fun updateBook(book: Book): Int {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(TITLE, book.title)
+            put(AUTHOR, book.author)
+            put(PRICE, book.price)
+            put(CATEGORY, book.category)
+            put(QUANTITY, book.quantity)
+            put(PUBLISHER, book.publisher)
+            put(EDITION, book.edition)
+            put(VENDOR, book.vendor)
+            put(IMAGE_RES_ID, book.imageResId)
+        }
+
+        return db.update(TABLE_BOOKS, values, "$ID = ?", arrayOf(book.id.toString()))
+    }
+
+    fun getBookDetailsById(bookId: Long): Book? {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_BOOKS,
+            null,
+            "$ID = ?",
+            arrayOf(bookId.toString()), // Convert Long to String
+            null, null, null
+        )
+
+        return cursor.use {
+            if (it.moveToFirst()) {
+                extractBookFromCursor(it)
+            } else {
+                null
+            }
+        }
+    }
+
+    fun getBookIdByTitle(title: String): Long? {
+        val db = readableDatabase
+        val cursor = db.query(
+            TABLE_BOOKS,
+            arrayOf(ID),
+            "$TITLE = ?",
+            arrayOf(title),
+            null, null, null
+        )
+
+        return cursor.use {
+            if (it.moveToFirst()) {
+                it.getLong(it.getColumnIndexOrThrow(ID))
+            } else {
+                null
+            }
+        }
+    }
+
+
+
+
 }
