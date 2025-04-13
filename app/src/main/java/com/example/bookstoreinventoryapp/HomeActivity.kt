@@ -1,18 +1,24 @@
 package com.example.bookstoreinventoryapp
 
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.LayoutInflater
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-class HomeActivity : AppCompatActivity() {
+class HomeActivity : BaseActivity() {
 
     private lateinit var bookRecyclerView: RecyclerView
     private lateinit var dbHelper: BookDatabaseHelper
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_home)
+
+        // Inflate the specific layout and attach it to the base layout's container
+        val contentView = LayoutInflater.from(this).inflate(R.layout.activity_home, null)
+        setContentView(R.layout.activity_base)
+        findViewById<android.widget.FrameLayout>(R.id.container).addView(contentView)
+
+        setupBottomNavigation(R.id.homeActivity)
 
         // Initialize RecyclerView and Database Helper
         bookRecyclerView = findViewById(R.id.bookListView)
