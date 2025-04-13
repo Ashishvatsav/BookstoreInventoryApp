@@ -31,6 +31,7 @@
         <activity android:name=".DetailsActivity" />
         <activity android:name=".ProfileActivity" />
         <activity android:name=".VendorsActivity" />
+        <activity android:name=".VendorDetailsActivity" />
 
     </application>
 
