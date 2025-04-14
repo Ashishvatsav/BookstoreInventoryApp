@@ -67,6 +67,7 @@ class BookAdapter(
         holder.bookTitle.text = currentBook.title
         holder.bookAuthor.text = currentBook.author
 
+        // Set the book cover image or placeholder
         if (currentBook.imageResId != 0) {
             holder.bookImage.setImageResource(currentBook.imageResId)
         } else {

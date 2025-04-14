@@ -2,23 +2,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="12dp"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/white">
 
+    <!-- SearchView -->
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:queryHint="Search books..."
         android:layout_marginTop="10dp"
         android:background="@drawable/search_background"
-        android:elevation="4dp"
-        app:queryHint="Search books..." />
+        android:elevation="4dp" />
 
+    <!-- RecyclerView for the book list -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/bookListView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="8dp"/>
+        android:layout_marginTop="8dp"
+        android:scrollbars="vertical" />
 </LinearLayout>

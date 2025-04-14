@@ -1,17 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    
+
     <!-- App Theme Colors -->
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
-    
+
     <!-- UI Colors -->
     <color name="background_light">#F5F5F5</color>
     <color name="card_background">#FFFFFF</color>
     <color name="text_primary">#333333</color>
     <color name="text_secondary">#757575</color>
     <color name="divider">#DDDDDD</color>
+    <color name="gray">#9E9E9E</color>
+    <color name="error_red">#F44336</color>
+ Added missing gray color -->
 </resources>
