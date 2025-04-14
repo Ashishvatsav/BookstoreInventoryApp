@@ -220,6 +220,14 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         }
     }
 
+    fun deleteBook(bookId: Int): Boolean {
+        val db = writableDatabase
+        val result = db.delete("books", "id = ?", arrayOf(bookId.toString()))
+        db.close()
+        return result > 0
+    }
+
+
 
 
 
