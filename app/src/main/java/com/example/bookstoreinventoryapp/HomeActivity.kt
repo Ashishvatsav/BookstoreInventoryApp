@@ -34,14 +34,17 @@ class HomeActivity : BaseActivity() {
 
         bookRecyclerView.layoutManager = LinearLayoutManager(this)
         bookAdapter = BookAdapter(this, allBooks, dbHelper)
-
         bookRecyclerView.adapter = bookAdapter
 
+        // Set up the search functionality
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String?): Boolean = false
+
             override fun onQueryTextChange(newText: String?): Boolean {
+                // Filter books based on the query
                 newText?.let {
-                    val filteredBooks = dbHelper.searchBooks(it)
+                    // Call a function to filter books by title
+                    val filteredBooks = dbHelper.searchBooksByTitle(it)
                     bookAdapter.updateBooks(filteredBooks)
                 }
                 return true

@@ -227,6 +227,57 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         return result > 0
     }
 
+    fun searchBooksByTitle(query: String): List<Book> {
+        val books = mutableListOf<Book>()
+        val db = this.readableDatabase
+
+        // Define query to search by book title
+        val cursor = db.rawQuery("SELECT * FROM books WHERE title LIKE ?", arrayOf("%$query%"))
+
+        // Get column indexes safely
+        val idIndex = cursor.getColumnIndex("id")
+        val titleIndex = cursor.getColumnIndex("title")
+        val authorIndex = cursor.getColumnIndex("author")
+        val imageResIdIndex = cursor.getColumnIndex("imageResId")
+        val categoryIndex = cursor.getColumnIndex("category")
+        val editionIndex = cursor.getColumnIndex("edition")
+        val priceIndex = cursor.getColumnIndex("price")
+        val publisherIndex = cursor.getColumnIndex("publisher")
+        val quantityIndex = cursor.getColumnIndex("quantity")
+        val vendorIndex = cursor.getColumnIndex("vendor")
+
+        if (idIndex == -1 || titleIndex == -1 || authorIndex == -1) {
+            // Log or throw an exception, depending on your app's behavior
+            Log.e("Database", "One or more columns are missing in the database!")
+            cursor.close()
+            return books
+        }
+
+        if (cursor.moveToFirst()) {
+            do {
+                val book = Book(
+                    id = cursor.getLong(idIndex),
+                    title = cursor.getString(titleIndex),
+                    author = cursor.getString(authorIndex),
+                    imageResId = if (imageResIdIndex != -1) cursor.getInt(imageResIdIndex) else 0,
+                    category = if (categoryIndex != -1) cursor.getString(categoryIndex) else "",
+                    edition = if (editionIndex != -1) cursor.getString(editionIndex) else "",
+                    price = if (priceIndex != -1) cursor.getString(priceIndex) else "0.0", // Changed to String for price
+                    publisher = if (publisherIndex != -1) cursor.getString(publisherIndex) else "",
+                    quantity = if (quantityIndex != -1) cursor.getInt(quantityIndex) else 0,
+                    vendor = if (vendorIndex != -1) cursor.getString(vendorIndex) else ""
+                )
+                books.add(book)
+            } while (cursor.moveToNext())
+        }
+        cursor.close()
+        return books
+    }
+
+
+
+
+
 
 
 
