@@ -1,22 +1,38 @@
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/homeActivity"
         android:icon="@drawable/ic_home"
-        android:title="Home" />
+        android:title="Home"
+        app:showAsAction="ifRoom"
+        android:enabled="true" />
+
     <item
         android:id="@+id/addEditActivity"
         android:icon="@drawable/ic_add"
-        android:title="Add/Edit" />
+        android:title="Add/Edit"
+        app:showAsAction="ifRoom"
+        android:enabled="true" />
+
     <item
         android:id="@+id/detailsActivity"
         android:icon="@drawable/ic_info"
-        android:title="Details" />
+        android:title="Details"
+        app:showAsAction="ifRoom"
+        android:enabled="true" />
+
     <item
         android:id="@+id/vendorsActivity"
         android:icon="@drawable/ic_store"
-        android:title="Vendors" />
+        android:title="Vendors"
+        app:showAsAction="ifRoom"
+        android:enabled="true" />
+
     <item
         android:id="@+id/profileActivity"
         android:icon="@drawable/ic_person"
-        android:title="Profile" />
+        android:title="Profile"
+        app:showAsAction="ifRoom"
+        android:enabled="true" />
 </menu>

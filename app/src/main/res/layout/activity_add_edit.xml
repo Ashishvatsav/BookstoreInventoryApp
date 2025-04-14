@@ -1,24 +1,40 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <LinearLayout
         android:orientation="vertical"
-        android:padding="16dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:spacing="8dp">
 
-        <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Book Information"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textStyle="bold"
+            android:paddingBottom="8dp" />
+
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnAddItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Add Book" />
+            android:text="Add Book"
+            android:icon="@drawable/ic_add"
+            style="@style/Widget.MaterialComponents.Button"
+            app:iconGravity="textStart" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnEditItem"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Edit Book" />
+            android:text="Edit Book"
+            android:icon="@drawable/ic_edit" />
 
         <Spinner
             android:id="@+id/spinnerBooks"
@@ -26,73 +42,113 @@
             android:layout_height="wrap_content"
             android:visibility="gone" />
 
-        <EditText
-            android:id="@+id/editTextTitle"
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Title" />
+            android:hint="Title">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextAuthor"
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Author"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Author" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextAuthor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextPrice"
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Price"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Price" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPrice"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextCategory"
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Category"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Category" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextCategory"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextQuantity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <com.google.android.material.textfield.TextInputLayout
             android:hint="Quantity"
-            android:inputType="number" />
-
-        <EditText
-            android:id="@+id/editTextPublisher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Publisher" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextQuantity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextEdition"
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Publisher"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Edition" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextPublisher"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
-        <EditText
-            android:id="@+id/editTextVendor"
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Edition"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Vendor" />
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextEdition"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:hint="Vendor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/editTextVendor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.google.android.material.textfield.TextInputLayout>
 
         <ImageView
             android:id="@+id/imageViewCover"
             android:layout_width="150dp"
             android:layout_height="200dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="8dp"
             android:scaleType="centerCrop"
             android:src="@drawable/ic_book_placeholder"
+            android:background="@drawable/image_border"
             android:layout_gravity="center" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSelectImage"
+            style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Select Cover Image" />
+            android:text="Select Cover Image"
+            android:icon="@drawable/ic_image" />
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/btnSaveBook"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Save Book" />
+            android:text="Save Book"
+            android:icon="@drawable/ic_save"
+            style="@style/Widget.MaterialComponents.Button"/>
     </LinearLayout>
 </ScrollView>

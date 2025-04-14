@@ -1,71 +1,93 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="horizontal"
-    android:padding="16dp"
-    android:background="@drawable/item_background"
-    android:layout_marginBottom="8dp">
+    android:layout_marginHorizontal="4dp"
+    android:layout_marginVertical="6dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp">
 
-    <!-- ImageView for the book cover -->
-    <ImageView
-        android:id="@+id/itemBookImage"
-        android:layout_width="100dp"
-        android:layout_height="150dp"
-        android:layout_marginEnd="16dp"
-        android:contentDescription="Book Cover"
-        android:scaleType="centerCrop"
-        android:background="@drawable/image_background" />
-
-    <!-- Vertical layout for book details -->
-    <LinearLayout
-        android:layout_width="0dp"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_weight="1">
+        android:padding="16dp">
 
-        <!-- Book title -->
+        <!-- Book Cover Image with improved styling -->
+        <ImageView
+            android:id="@+id/itemBookImage"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            android:background="@drawable/image_background"
+            android:contentDescription="Book Cover"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Book Title with improved positioning -->
         <TextView
             android:id="@+id/itemBookTitle"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif-medium"
+            android:maxLines="2"
             android:text="Book Title"
-            android:textSize="18sp"
-            android:textStyle="bold"
             android:textColor="@color/text_primary"
-            android:layout_marginBottom="4dp" />
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemBookImage"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Book author -->
+        <!-- Book Author with improved positioning -->
         <TextView
             android:id="@+id/itemBookAuthor"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="4dp"
+            android:ellipsize="end"
+            android:fontFamily="sans-serif"
+            android:maxLines="1"
             android:text="Author Name"
-            android:textSize="14sp"
             android:textColor="@color/text_secondary"
-            android:layout_marginBottom="8dp" />
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemBookImage"
+            app:layout_constraintTop_toBottomOf="@id/itemBookTitle" />
 
-        <!-- Buttons for actions -->
-        <LinearLayout
+        <!-- Material Buttons for Actions -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_see_details"
+            style="@style/Widget.MaterialComponents.Button"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_height="40dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:paddingHorizontal="16dp"
+            android:text="Details"
+            android:textColor="@android:color/white"
+            app:cornerRadius="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/itemBookImage"
+            app:layout_constraintTop_toBottomOf="@id/itemBookAuthor" />
 
-            <Button
-                android:id="@+id/btn_see_details"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="See Details"
-                android:layout_marginEnd="8dp"
-                android:backgroundTint="@color/colorPrimary"
-                android:textColor="@android:color/white" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_delete"
+            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginStart="8dp"
+            android:paddingHorizontal="16dp"
+            android:text="Delete"
+            android:textColor="@color/error_red"
+            app:cornerRadius="8dp"
+            app:strokeColor="@color/error_red"
+            app:layout_constraintBottom_toBottomOf="@id/btn_see_details"
+            app:layout_constraintStart_toEndOf="@id/btn_see_details"
+            app:layout_constraintTop_toTopOf="@id/btn_see_details" />
 
-            <Button
-                android:id="@+id/btn_delete"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Delete"
-                android:backgroundTint="@color/error_red"
-                android:textColor="@android:color/white" />
-        </LinearLayout>
-    </LinearLayout>
-</LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
