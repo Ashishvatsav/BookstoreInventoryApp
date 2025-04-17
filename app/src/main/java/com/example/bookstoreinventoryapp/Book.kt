@@ -10,5 +10,5 @@ data class Book(
     val publisher: String,
     val edition: String,
     val vendor: String,
-    val imageResId: Int
+    val imageUri: String
 )

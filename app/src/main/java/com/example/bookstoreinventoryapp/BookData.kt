@@ -11,7 +11,7 @@ object BookData {
             publisher = "Scribner",
             edition = "1st Edition",
             vendor = "Scribner",
-            imageResId = R.drawable.book_cover1
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover1"
         ),
         Book(
             title = "1984",
@@ -22,7 +22,7 @@ object BookData {
             publisher = "Secker & Warburg",
             edition = "1st Edition",
             vendor = "Harcourt",
-            imageResId = R.drawable.book_cover2
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover2"
         ),
         Book(
             title = "To Kill a Mockingbird",
@@ -33,7 +33,7 @@ object BookData {
             publisher = "J.B. Lippincott & Co.",
             edition = "1st Edition",
             vendor = "HarperCollins",
-            imageResId = R.drawable.book_cover3
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover3"
         ),
         Book(
             title = "The Hobbit",
@@ -44,7 +44,7 @@ object BookData {
             publisher = "George Allen & Unwin",
             edition = "2nd Edition",
             vendor = "Houghton Mifflin",
-            imageResId = R.drawable.book_cover4
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover4"
         ),
         Book(
             title = "Pride and Prejudice",
@@ -55,7 +55,7 @@ object BookData {
             publisher = "T. Egerton",
             edition = "3rd Edition",
             vendor = "Penguin Books",
-            imageResId = R.drawable.book_cover5
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover5"
         ),
         Book(
             title = "The Catcher in the Rye",
@@ -66,7 +66,7 @@ object BookData {
             publisher = "Little, Brown and Company",
             edition = "1st Edition",
             vendor = "Back Bay Books",
-            imageResId = R.drawable.book_cover6
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover6"
         ),
         Book(
             title = "The Alchemist",
@@ -77,7 +77,7 @@ object BookData {
             publisher = "HarperTorch",
             edition = "1st Edition",
             vendor = "HarperOne",
-            imageResId = R.drawable.book_cover7
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover7"
         ),
         Book(
             title = "Sapiens: A Brief History of Humankind",
@@ -88,7 +88,7 @@ object BookData {
             publisher = "Harvill Secker",
             edition = "1st Edition",
             vendor = "Vintage",
-            imageResId = R.drawable.book_cover8
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover8"
         ),
         Book(
             title = "Atomic Habits",
@@ -99,7 +99,7 @@ object BookData {
             publisher = "Avery",
             edition = "1st Edition",
             vendor = "Penguin Random House",
-            imageResId = R.drawable.book_cover9
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover9"
         ),
         Book(
             title = "The Subtle Art of Not Giving a F*ck",
@@ -110,7 +110,7 @@ object BookData {
             publisher = "Harper",
             edition = "1st Edition",
             vendor = "HarperOne",
-            imageResId = R.drawable.book_cover10
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover10"
         ),
         Book(
             title = "Becoming",
@@ -121,7 +121,7 @@ object BookData {
             publisher = "Crown Publishing Group",
             edition = "1st Edition",
             vendor = "Penguin Random House",
-            imageResId = R.drawable.book_cover11
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover11"
         ),
         Book(
             title = "Thinking, Fast and Slow",
@@ -132,7 +132,7 @@ object BookData {
             publisher = "Farrar, Straus and Giroux",
             edition = "1st Edition",
             vendor = "Macmillan",
-            imageResId = R.drawable.book_cover12
+            imageUri = "android.resource://com.example.bookstoreinventoryapp/drawable/book_cover12"
         )
     )
 }

@@ -24,7 +24,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         private const val PUBLISHER = "publisher"
         private const val EDITION = "edition"
         private const val VENDOR = "vendor"
-        private const val IMAGE_RES_ID = "imageResId"
+        private const val IMAGE_URI = "imageUri" // Changed from imageResId to imageUri
     }
 
     override fun onCreate(db: SQLiteDatabase?) {
@@ -39,7 +39,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
                 $PUBLISHER TEXT,
                 $EDITION TEXT,
                 $VENDOR TEXT,
-                $IMAGE_RES_ID INTEGER
+                $IMAGE_URI TEXT  -- Changed column type to TEXT
             )
         """.trimIndent()
         db?.execSQL(createTable)
@@ -61,7 +61,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             put(PUBLISHER, book.publisher)
             put(EDITION, book.edition)
             put(VENDOR, book.vendor)
-            put(IMAGE_RES_ID, book.imageResId)
+            put(IMAGE_URI, book.imageUri) // Store imageUri as TEXT
         }
         val id = db.insert(TABLE_BOOKS, null, values)
         db.close()
@@ -121,48 +121,8 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             publisher = cursor.getString(cursor.getColumnIndexOrThrow(PUBLISHER)),
             edition = cursor.getString(cursor.getColumnIndexOrThrow(EDITION)),
             vendor = cursor.getString(cursor.getColumnIndexOrThrow(VENDOR)),
-            imageResId = cursor.getInt(cursor.getColumnIndexOrThrow(IMAGE_RES_ID))
+            imageUri = cursor.getString(cursor.getColumnIndexOrThrow(IMAGE_URI)) // Extract imageUri
         )
-    }
-
-
-    // Other methods (getBookByTitle, etc.) remain the same
-
-    // Add these methods to your BookDatabaseHelper class
-    fun getAllBookTitles(): List<String> {
-        val db = readableDatabase
-        val cursor = db.query(
-            TABLE_BOOKS,
-            arrayOf(TITLE),
-            null, null, null, null, null
-        )
-
-        return cursor.use {
-            val titles = mutableListOf<String>()
-            while (it.moveToNext()) {
-                titles.add(it.getString(it.getColumnIndexOrThrow(TITLE)))
-            }
-            titles
-        }
-    }
-
-    fun getBookDetailsByTitle(title: String): Book? {
-        val db = readableDatabase
-        val cursor = db.query(
-            TABLE_BOOKS,
-            null,
-            "$TITLE = ?",
-            arrayOf(title),
-            null, null, null
-        )
-
-        return cursor.use {
-            if (it.moveToFirst()) {
-                extractBookFromCursor(it)
-            } else {
-                null
-            }
-        }
     }
 
     fun updateBook(book: Book): Int {
@@ -176,7 +136,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
             put(PUBLISHER, book.publisher)
             put(EDITION, book.edition)
             put(VENDOR, book.vendor)
-            put(IMAGE_RES_ID, book.imageResId)
+            put(IMAGE_URI, book.imageUri) // Update imageUri
         }
 
         return db.update(TABLE_BOOKS, values, "$ID = ?", arrayOf(book.id.toString()))
@@ -238,7 +198,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         val idIndex = cursor.getColumnIndex("id")
         val titleIndex = cursor.getColumnIndex("title")
         val authorIndex = cursor.getColumnIndex("author")
-        val imageResIdIndex = cursor.getColumnIndex("imageResId")
+        val imageUriIndex = cursor.getColumnIndex("imageUri") // Corrected column name
         val categoryIndex = cursor.getColumnIndex("category")
         val editionIndex = cursor.getColumnIndex("edition")
         val priceIndex = cursor.getColumnIndex("price")
@@ -259,7 +219,7 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
                     id = cursor.getLong(idIndex),
                     title = cursor.getString(titleIndex),
                     author = cursor.getString(authorIndex),
-                    imageResId = if (imageResIdIndex != -1) cursor.getInt(imageResIdIndex) else 0,
+                    imageUri = cursor.getString(imageUriIndex), // Corrected field
                     category = if (categoryIndex != -1) cursor.getString(categoryIndex) else "",
                     edition = if (editionIndex != -1) cursor.getString(editionIndex) else "",
                     price = if (priceIndex != -1) cursor.getString(priceIndex) else "0.0", // Changed to String for price
@@ -274,8 +234,27 @@ class BookDatabaseHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_
         return books
     }
 
+    fun getAllBookTitles(): List<String> {
+        val db = readableDatabase
+        val cursor = db.query(TABLE_BOOKS, arrayOf(TITLE), null, null, null, null, null)
 
+        return cursor.use {
+            val titles = mutableListOf<String>()
+            while (it.moveToNext()) {
+                titles.add(it.getString(it.getColumnIndexOrThrow(TITLE)))
+            }
+            titles
+        }
+    }
 
+    fun getBookDetailsByTitle(title: String): Book? {
+        val bookId = getBookIdByTitle(title)
+        return if (bookId != null) {
+            getBookDetailsById(bookId)
+        } else {
+            null
+        }
+    }
 
 
 

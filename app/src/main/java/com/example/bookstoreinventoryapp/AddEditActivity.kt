@@ -102,8 +102,9 @@ class AddEditActivity : AppCompatActivity() {
                     editTextPublisher.setText(it.publisher)
                     editTextEdition.setText(it.edition)
                     editTextVendor.setText(it.vendor)
+                    selectedImageUri = if (it.imageUri.isNotEmpty()) Uri.parse(it.imageUri) else null
                     Glide.with(this@AddEditActivity)
-                        .load(it.imageResId)
+                        .load(selectedImageUri ?: R.drawable.ic_book_placeholder)
                         .into(imageViewCover)
                 }
             }
@@ -121,9 +122,7 @@ class AddEditActivity : AppCompatActivity() {
         val publisher = editTextPublisher.text.toString()
         val edition = editTextEdition.text.toString()
         val vendor = editTextVendor.text.toString()
-        val imageResId = selectedImageUri?.let { uri ->
-            uri.hashCode()
-        } ?: R.drawable.ic_book_placeholder
+        val imageUriString = selectedImageUri?.toString() ?: ""
 
         val book = Book(
             id = editingBookId ?: 0,
@@ -135,7 +134,7 @@ class AddEditActivity : AppCompatActivity() {
             publisher = publisher,
             edition = edition,
             vendor = vendor,
-            imageResId = imageResId
+            imageUri = imageUriString
         )
 
         if (editingBookId == null) {

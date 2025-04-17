@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.snackbar.Snackbar
+import com.bumptech.glide.Glide
 
 class DetailsActivity : AppCompatActivity() {
 
@@ -104,7 +105,11 @@ class DetailsActivity : AppCompatActivity() {
             if (book != null) {
                 val formattedDetails = buildFormattedDetails(book)
                 detailsText.text = formattedDetails
-                detailsCoverImage.setImageResource(book.imageResId)
+
+                // Use Glide to load the image from the URI
+                Glide.with(this)
+                    .load(book.imageUri) // Loading the image URI
+                    .into(detailsCoverImage)
 
                 val fadeIn = AnimationUtils.loadAnimation(this, android.R.anim.fade_in)
                 fadeIn.duration = 500
